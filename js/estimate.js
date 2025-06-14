@@ -110,13 +110,18 @@ function calculateTotal() {
 function addSubmitLink() {
     const data = window.finalEstimateData;
     const link = document.querySelector('#step-6 a');
-    const url = new URL('/pages/form.html', window.location.origin);
+
+    // 현재 경로 기준으로 form.html 경로 계산
+    const basePath = window.location.pathname.split('/').slice(0, -1).join('/') + '/';
+    const url = new URL(basePath + 'form.html', window.location.origin);
+
     url.searchParams.set('site', data.site);
     url.searchParams.set('pages', data.pages);
     url.searchParams.set('features', data.features);
     url.searchParams.set('design', data.design);
     url.searchParams.set('hosting', data.hosting);
     url.searchParams.set('total', data.total);
+
     link.href = url.toString();
 }
 
