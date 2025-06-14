@@ -9,7 +9,6 @@ function showStep(step) {
         }
     });
 
-    // Update Progress Bar
     const progressBar = document.getElementById('progress-bar');
     const progressSteps = document.querySelectorAll('.progress-step');
     progressSteps.forEach((stepEl, index) => {
@@ -22,14 +21,13 @@ function showStep(step) {
 
     progressBar.style.width = `${(step - 1) / (progressSteps.length - 1) * 100}%`;
 
-    // Update Progress Percent
     const progressPercent = document.getElementById('progress-percent');
     const percent = Math.round(((step - 1) / (progressSteps.length - 1)) * 100);
     progressPercent.textContent = `Step ${step} of ${progressSteps.length} (${percent}%)`;
 
-    // If Step 6 → Calculate Total
     if (step === 6) {
         calculateTotal();
+        addSubmitLink();
     }
 }
 
@@ -51,7 +49,6 @@ function calculateTotal() {
     let total = 0;
     let breakdownHTML = '';
 
-    // Step 1: Site Type (radio)
     const siteType = document.querySelector('input[name="site-type"]:checked');
     if (siteType) {
         const price = parseInt(siteType.value);
@@ -59,52 +56,70 @@ function calculateTotal() {
         breakdownHTML += `<tr><td>Website Type</td><td>$${price}</td></tr>`;
     }
 
-    // Step 2: Page Count
     const pageCount = parseInt(document.getElementById('page-count').value);
     const pagePrice = pageCount * 50;
     total += pagePrice;
     breakdownHTML += `<tr><td>Pages (${pageCount} pages)</td><td>$${pagePrice}</td></tr>`;
 
-    // Step 3: Core Features
-    const coreFeatures = document.querySelectorAll('#step-3 input[type="checkbox"]');
-    coreFeatures.forEach(cb => {
+    const featureArr = [];
+    document.querySelectorAll('#step-3 input[type="checkbox"]').forEach(cb => {
         if (cb.checked) {
+            const label = cb.getAttribute('data-label');
             const price = parseInt(cb.value);
             total += price;
-            breakdownHTML += `<tr><td>Feature: ${cb.parentElement.textContent.trim()}</td><td>$${price}</td></tr>`;
+            breakdownHTML += `<tr><td>Feature: ${label}</td><td>$${price}</td></tr>`;
+            featureArr.push(label);
         }
     });
 
-    // Step 4: Design Options
-    const designOptions = document.querySelectorAll('#step-4 input[type="checkbox"]');
-    designOptions.forEach(cb => {
+    const designArr = [];
+    document.querySelectorAll('#step-4 input[type="checkbox"]').forEach(cb => {
         if (cb.checked) {
+            const label = cb.getAttribute('data-label');
             const price = parseInt(cb.value);
             total += price;
-            breakdownHTML += `<tr><td>Design: ${cb.parentElement.textContent.trim()}</td><td>$${price}</td></tr>`;
+            breakdownHTML += `<tr><td>Design: ${label}</td><td>$${price}</td></tr>`;
+            designArr.push(label);
         }
     });
 
-    // Step 5: Hosting & Maintenance
-    const hostingOptions = document.querySelectorAll('#step-5 input[type="checkbox"]');
-    hostingOptions.forEach(cb => {
+    const hostingArr = [];
+    document.querySelectorAll('#step-5 input[type="checkbox"]').forEach(cb => {
         if (cb.checked) {
+            const label = cb.getAttribute('data-label');
             const price = parseInt(cb.value);
             total += price;
-            breakdownHTML += `<tr><td>Hosting/Maintenance: ${cb.parentElement.textContent.trim()}</td><td>$${price}</td></tr>`;
+            breakdownHTML += `<tr><td>Hosting/Maintenance: ${label}</td><td>$${price}</td></tr>`;
+            hostingArr.push(label);
         }
     });
 
-    // Display breakdown
-    const breakdownTable = document.getElementById('estimate-breakdown');
-    breakdownTable.innerHTML = breakdownHTML;
+    document.getElementById('estimate-breakdown').innerHTML = breakdownHTML;
+    document.getElementById('result').textContent = `$${total}`;
 
-    // Display total
-    const resultDiv = document.getElementById('result');
-    resultDiv.textContent = `$${total}`;
+    window.finalEstimateData = {
+        site: siteType ? siteType.getAttribute('data-label') : '',
+        pages: pageCount,
+        features: featureArr.join(', '),
+        design: designArr.join(', '),
+        hosting: hostingArr.join(', '),
+        total: `$${total}`
+    };
 }
 
-// Initialize first step on load
+function addSubmitLink() {
+    const data = window.finalEstimateData;
+    const link = document.querySelector('#step-6 a');
+    const url = new URL('/pages/form.html', window.location.origin);
+    url.searchParams.set('site', data.site);
+    url.searchParams.set('pages', data.pages);
+    url.searchParams.set('features', data.features);
+    url.searchParams.set('design', data.design);
+    url.searchParams.set('hosting', data.hosting);
+    url.searchParams.set('total', data.total);
+    link.href = url.toString();
+}
+
 window.addEventListener('DOMContentLoaded', () => {
     showStep(currentStep);
 });

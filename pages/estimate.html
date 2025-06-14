@@ -1,111 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>FastWebQuote - Estimate</title>
-    <link rel="stylesheet" href="../css/style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FastWebQuote - Estimate Calculator</title>
+  <link rel="stylesheet" href="../css/style.css" />
 </head>
 <body>
-    <nav>
-        <a href="../index.html">Home</a>
-        <a href="estimate.html" class="active">Estimate</a>
-        <a href="info.html">Info</a>
-        <a href="form.html">Request Form</a>
-    </nav>
+  <nav>
+    <a href="../index.html">Home</a>
+    <a href="estimate.html" class="active">Estimate</a>
+    <a href="info.html">Info</a>
+    <a href="form.html" id="requestFormLink">Request Form</a>
+  </nav>
 
-    <div class="container">
-        <header>
-            <h1>Estimate Your Project</h1>
-            <p>Step-by-step quote for your custom website.</p>
-        </header>
+  <div class="container">
+    <header>
+      <h1>Project Estimate Calculator</h1>
+      <p>Select step by step to get an estimated cost for your custom website.</p>
+    </header>
 
-        <!-- Progress Bar -->
-        <div class="progress-container">
-            <div class="progress-bar" id="progress-bar"></div>
-            <div class="progress-step active">1</div>
-            <div class="progress-step">2</div>
-            <div class="progress-step">3</div>
-            <div class="progress-step">4</div>
-            <div class="progress-step">5</div>
-            <div class="progress-step">6</div>
-        </div>
-
-        <p id="progress-percent" style="text-align:center; margin-bottom: 20px; font-weight: bold; color: #1e3a8a;">Step 1 of 6 (0%)</p>
-
-        <!-- Step 1 -->
-        <section class="estimate-step" id="step-1">
-            <h2>Select Website Type</h2>
-            <label><input type="radio" name="site-type" value="200"> Landing Page ($200)</label><br>
-            <label><input type="radio" name="site-type" value="300"> Blog ($300)</label><br>
-            <label style="color:gray;"><input type="radio" name="site-type" value="400" disabled> Company Website ($400) - Coming Soon</label><br>
-            <label style="color:gray;"><input type="radio" name="site-type" value="800" disabled> E-commerce ($800) - Coming Soon</label><br>
-            <label style="color:gray;"><input type="radio" name="site-type" value="1500" disabled> Web App ($1500) - Coming Soon</label><br>
-            <button class="next-btn" onclick="nextStep()">Next</button>
-        </section>
-
-        <!-- Step 2 -->
-        <section class="estimate-step hidden" id="step-2">
-            <h2>Number of Pages</h2>
-            <input type="number" id="page-count" value="1" min="1" max="50" style="width:100px;"> pages ($50 per page)
-            <br><br>
-            <button class="back-btn" onclick="prevStep()">Back</button>
-            <button class="next-btn" onclick="nextStep()">Next</button>
-        </section>
-
-        <!-- Step 3 -->
-        <section class="estimate-step hidden" id="step-3">
-            <h2>Core Features</h2>
-            <label><input type="checkbox" value="100"> Contact Form ($100)</label><br>
-            <label style="color:gray;"><input type="checkbox" value="300" disabled> Admin Panel ($300) - Coming Soon</label><br>
-            <label><input type="checkbox" value="200"> Blog Feature ($200)</label><br>
-            <label style="color:gray;"><input type="checkbox" value="500" disabled> E-commerce Payment ($500) - Coming Soon</label><br>
-            <label style="color:gray;"><input type="checkbox" value="300" disabled> API Integration ($300) - Coming Soon</label><br>
-            <button class="back-btn" onclick="prevStep()">Back</button>
-            <button class="next-btn" onclick="nextStep()">Next</button>
-        </section>
-
-        <!-- Step 4 -->
-        <section class="estimate-step hidden" id="step-4">
-            <h2>Design Options</h2>
-            <label style="color:gray;"><input type="checkbox" value="200" disabled> Custom Animation ($200) - Coming Soon</label><br>
-            <label style="color:gray;"><input type="checkbox" value="300" disabled> Branding & Identity ($300) - Coming Soon</label><br>
-            <label style="color:gray;"><input type="checkbox" value="200" disabled> Illustrations ($200) - Coming Soon</label><br>
-            <button class="back-btn" onclick="prevStep()">Back</button>
-            <button class="next-btn" onclick="nextStep()">Next</button>
-        </section>
-
-        <!-- Step 5 -->
-        <section class="estimate-step hidden" id="step-5">
-            <h2>Hosting & Maintenance</h2>
-            <label style="color:gray;"><input type="checkbox" value="200" disabled> Basic Hosting ($200) - Coming Soon</label><br>
-            <label style="color:gray;"><input type="checkbox" value="400" disabled> Premium Hosting ($400) - Coming Soon</label><br>
-            <label style="color:gray;"><input type="checkbox" value="1200" disabled> Maintenance Plan ($1200) - Coming Soon</label><br>
-            <button class="back-btn" onclick="prevStep()">Back</button>
-            <button class="next-btn" onclick="nextStep()">Next</button>
-        </section>
-
-        <!-- Step 6 -->
-        <section class="estimate-step hidden" id="step-6">
-            <h2>Your Estimated Total</h2>
-            <table style="width:100%; margin-bottom:20px;">
-                <tr><th>Item</th><th>Cost</th></tr>
-                <tbody id="estimate-breakdown"></tbody>
-            </table>
-            <div class="result" id="result">$0</div>
-            <p style="text-align: center; margin-top: 20px;">
-                Ready to request? <a href="form.html">Submit your request here!</a>
-            </p>
-            <button class="back-btn" onclick="prevStep()">Back</button>
-        </section>
+    <!-- Progress Bar -->
+    <div class="progress-container">
+      <div class="progress-bar" id="progress-bar"></div>
+      <div class="progress-step active">1</div>
+      <div class="progress-step">2</div>
+      <div class="progress-step">3</div>
+      <div class="progress-step">4</div>
+      <div class="progress-step">5</div>
+      <div class="progress-step">6</div>
     </div>
+    <p id="progress-percent" style="text-align:center; margin-bottom: 20px; font-weight: bold; color: #1e3a8a;">Step 1 of 6 (0%)</p>
 
-    <script src="../js/estimate.js"></script>
-    <footer>
-        <div class="footer-content">
-            <p>&copy; 2025 FastWebQuote. All rights reserved.</p>
-            <p>Contact: contact@fastwebquote.com</p>
-        </div>
-    </footer>
+    <!-- Step 1 -->
+    <section class="estimate-step" id="step-1">
+      <h2>Select Website Type</h2>
+      <p style="color: gray; margin-bottom:10px;">Choose the most suitable type based on your project.</p>
+      <label><input type="radio" name="site-type" value="300" data-label="Landing Page"> Landing Page ($300)</label><br>
+      <label><input type="radio" name="site-type" value="500" data-label="Blog"> Blog ($500)</label><br>
+      <label><input type="radio" name="site-type" value="1000" data-label="Company Website"> Company Website ($1000)</label><br>
+      <label><input type="radio" name="site-type" value="2000" data-label="E-commerce"> E-commerce ($2000)</label><br>
+      <label><input type="radio" name="site-type" value="3000" data-label="Web Application"> Web Application ($3000)</label><br>
+      <button class="next-btn" onclick="nextStep()">Next</button>
+    </section>
+
+    <!-- Step 2 -->
+    <section class="estimate-step hidden" id="step-2">
+      <h2>Enter Number of Pages</h2>
+      <p style="color: gray; margin-bottom:10px;">e.g., About, Services, Portfolio, Contact = 4 pages</p>
+      <input type="number" id="page-count" value="1" min="1" max="50" style="width:100px;"> pages ($50 per page)
+      <br><br>
+      <button class="back-btn" onclick="prevStep()">Back</button>
+      <button class="next-btn" onclick="nextStep()">Next</button>
+    </section>
+
+    <!-- Step 3 -->
+    <section class="estimate-step hidden" id="step-3">
+      <h2>Select Core Features</h2>
+      <p style="color: gray; margin-bottom:10px;">Add extra features to enhance your website. (Optional)</p>
+      <label><input type="checkbox" value="150" data-label="Newsletter Signup"> Newsletter Signup Form ($150)</label><br>
+      <label><input type="checkbox" value="200" data-label="Live Chat"> Live Chat Support ($200)</label><br>
+      <label><input type="checkbox" value="250" data-label="SEO Optimization"> SEO Optimization ($250)</label><br>
+      <label><input type="checkbox" value="300" data-label="User Login System"> User Login & Registration ($300)</label><br>
+      <label><input type="checkbox" value="350" data-label="Analytics Dashboard"> Google Analytics Integration ($350)</label><br>
+      <label><input type="checkbox" value="400" data-label="Multilingual Support"> Multilingual (Korean/English Toggle) ($400)</label><br>
+      <label><input type="checkbox" value="500" data-label="Online Payment"> Online Payment Integration ($500)</label><br>
+      <button class="back-btn" onclick="prevStep()">Back</button>
+      <button class="next-btn" onclick="nextStep()">Next</button>
+    </section>
+
+    <!-- Step 4 -->
+    <section class="estimate-step hidden" id="step-4">
+      <h2>Design Options</h2>
+      <p style="color: gray; margin-bottom:10px;">Choose advanced design features if needed.</p>
+      <label><input type="checkbox" value="200" data-label="Custom Animation"> Custom Animation ($200)</label><br>
+      <label><input type="checkbox" value="300" data-label="Branding & Identity"> Branding & Identity ($300)</label><br>
+      <label><input type="checkbox" value="400" data-label="Illustration"> Custom Illustration ($400)</label><br>
+      <button class="back-btn" onclick="prevStep()">Back</button>
+      <button class="next-btn" onclick="nextStep()">Next</button>
+    </section>
+
+    <!-- Step 5 -->
+    <section class="estimate-step hidden" id="step-5">
+      <h2>Hosting & Maintenance</h2>
+      <p style="color: gray; margin-bottom:10px;">Select if you want us to host and maintain your site after launch.</p>
+      <label><input type="checkbox" value="300" data-label="Basic Hosting"> Basic Hosting ($300)</label><br>
+      <label><input type="checkbox" value="500" data-label="Premium Hosting"> Premium Hosting ($500)</label><br>
+      <label><input type="checkbox" value="1200" data-label="Maintenance Plan"> Maintenance Plan ($1200)</label><br>
+      <button class="back-btn" onclick="prevStep()">Back</button>
+      <button class="next-btn" onclick="nextStep()">Next</button>
+    </section>
+
+    <!-- Step 6 -->
+    <section class="estimate-step hidden" id="step-6">
+      <h2>Final Estimate</h2>
+      <table style="width:100%; margin-bottom:20px;">
+        <tr><th>Item</th><th>Cost</th></tr>
+        <tbody id="estimate-breakdown"></tbody>
+      </table>
+      <div class="result" id="result">$0</div>
+      <p style="text-align: center; margin-top: 20px;">
+        Ready to proceed? <a href="/pages/form.html" id="goToFormLink">Submit your request here</a>
+      </p>
+      <button class="back-btn" onclick="prevStep()">Back</button>
+    </section>
+  </div>
+
+  <script src="../js/estimate.js"></script>
+  <footer>
+    <div class="footer-content">
+      <p>&copy; 2025 FastWebQuote. All rights reserved.</p>
+      <p>Contact: contact@fastwebquote.com</p>
+    </div>
+  </footer>
 </body>
 </html>
